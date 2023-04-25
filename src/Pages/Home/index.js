@@ -17,7 +17,7 @@ const Home = () => {
       .then((res) => res.json())
       .then((data) => setProductsData(data));
   };
-  console.log(productsData);
+
   return (
     <div className="homepage-container">
       <div className="search-input">

@@ -1,0 +1,16 @@
+.filter-item {
+  padding: 1em;
+  cursor: pointer;
+}
+.filter-option {
+  margin: 0.7em 0 0 0.4em;
+}
+.filter-checkbox {
+  margin-right: 0.7em;
+  cursor: pointer;
+}
+input.filter-checkbox {
+  width: 1.2em;
+  height: 1.2em;
+  accent-color: #c4c4c4;
+}

@@ -1,0 +1,25 @@
+.product-card {
+  padding: 0.8em;
+  width: 25%;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.product-img-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+}
+.product-details {
+  margin: 2em 0 1em 0;
+  display: flex;
+  justify-content: space-between;
+}
+.add-cart-btn {
+  width: 50%;
+  height: 2.2em;
+  cursor: pointer;
+  background: #383838;
+  color: white;
+  border: 0;
+}

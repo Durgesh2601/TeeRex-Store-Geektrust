@@ -4,13 +4,17 @@ import "./index.css";
 import ProductCard from "../../Components/ProductCard";
 import EmptyScreen from "../../Components/EmptyScreen";
 import Filter from "../../Components/Filters";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const [productsData, setProductsData] = useState([]);
+  const state = useSelector((state) => state);
 
   useEffect(() => {
     getProductData();
   }, []);
+
+  console.log(state)
 
   const getProductData = () => {
     fetch(GET_PRODUCTS_API)

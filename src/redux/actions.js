@@ -1,0 +1,4 @@
+export const SET_PRODUCTS_DATA = "SET_PRODUCTS_DATA";
+export const SET_CART_DATA = "SET_CART_DATA";
+
+export const SET_FILTERS = "SET_FILTERS";

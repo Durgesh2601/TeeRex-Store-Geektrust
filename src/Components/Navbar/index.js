@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { BsCart3 } from "react-icons/bs";
 import "./index.css";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const cartDataCount = useSelector((state) => state?.cartData?.length);
   return (
     <nav className="navbar">
       <div>
@@ -15,11 +17,13 @@ const Navbar = () => {
           </li>
           <li>
             <Link to={"/cart"}>
-              <div>
+              <div className="cart-icon-container">
                 <div>
-                  <BsCart3 className="" size={22} />
+                  <BsCart3 size={22} />
                 </div>
-                <div></div>
+                {cartDataCount > 0 && (
+                  <div className="cart-count">{cartDataCount}</div>
+                )}
               </div>
             </Link>
           </li>

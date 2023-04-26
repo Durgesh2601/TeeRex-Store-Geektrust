@@ -1,0 +1,15 @@
+.cart-container{
+    margin-top: 6em;
+}
+.cart-header{
+    padding-left: 3em;
+}
+.cart-data-container{
+    border-bottom: 1px solid grey;
+    max-height: 22em;
+    overflow-y: scroll;
+    width: 40%;
+    padding: 0 1.8em;
+    margin-top: 2em;
+    margin-left: 5em;
+}

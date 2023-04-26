@@ -3,3 +3,18 @@
   padding: 0;
   box-sizing: border-box;
 }
+.empty-state{
+  text-align: center;
+  margin-top: 2em;
+}
+.total-amount-container{
+  width: 40%;
+  margin-left: 5em;
+  padding-left: 1em;
+  padding-top: 1em;
+}
+.total-amount-details{
+  display: flex;
+  gap: 2em;
+  justify-content: center;
+}

@@ -1,7 +1,7 @@
 const EmptyScreen = () => {
   return (
     <div>
-      <h2>No Products Found!!</h2>
+      <h2 className="empty-state">No Products Found!!</h2>
     </div>
   );
 };

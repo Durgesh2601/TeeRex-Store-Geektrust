@@ -23,3 +23,77 @@
   color: white;
   border: 0;
 }
+
+/* Cart product card styles starts here*/
+.cart-product-card {
+  padding: 1em;
+  display: flex;
+  gap: 2.5em;
+}
+.cart-prod-img{
+  border: 1px solid lightgray;
+  padding: 0.5em;
+  border-radius: 0.2em;
+}
+.cart-prod-name {
+  display: flex;
+  align-items: center;
+}
+.cart-prod-price {
+  margin-top: 0.8em;
+}
+.cart-prod-details {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.cart-delete {
+  display: flex;
+  align-items: center;
+}
+.cart-delete-btn {
+  background-color: white;
+  border: 1.5px solid grey;
+  padding: 0.4em 1.4em;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: 0.2em;
+}
+.quantity-input {
+  display: flex;
+  align-items: center;
+}
+
+.decrease-btn,
+.increase-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background-color: #f7f7f7;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+}
+
+.quantity-field {
+  width: 40px;
+  height: 24px;
+  border: none;
+  background-color: #f7f7f7;
+  font-size: 16px;
+  text-align: center;
+  margin: 0 10px;
+}
+
+.quantity-field::-webkit-outer-spin-button,
+.quantity-field::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.quantity-field:focus {
+  outline: none;
+}

@@ -1,6 +1,24 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCartData } from "../../redux/reducer";
 import "./index.css";
+import { getUpdatedCartData } from "../../Utils/helperFunctions";
 
-const ProductCard = ({ product }) => {
+const MainProductCard = ({ product }) => {
+  const dispatch = useDispatch();
+  const cartData = useSelector((state) => state?.cartData);
+  const isAddedInCart = cartData?.some((item) => item?.id === product?.id);
+  const cartBtnText = isAddedInCart ? "Remove" : "Add to cart";
+
+  const handleAddToCart = () => {
+    if (isAddedInCart) {
+      const newCartData = cartData?.filter((item) => item?.id !== product?.id);
+      dispatch(setCartData(newCartData));
+    } else {
+      dispatch(setCartData([...cartData, product]));
+    }
+  };
+
   return (
     <div className="product-card">
       <h4>{product?.name}</h4>
@@ -14,10 +32,89 @@ const ProductCard = ({ product }) => {
       </div>
       <div className="product-details">
         <h4 className="price-tag">Rs. {product?.price}</h4>
-        <button className="add-cart-btn">Add to cart</button>
+        <button className="add-cart-btn" onClick={handleAddToCart}>
+          {cartBtnText}
+        </button>
       </div>
     </div>
   );
 };
 
-export default ProductCard;
+const CartProductCard = ({ product }) => {
+  const [quantity, setQuantity] = useState(product?.quantity);
+  const cartData = useSelector((state) => state?.cartData);
+  const dispatch = useDispatch();
+
+  const handleQuantityChange = (event) => {
+    let newQuantity = parseInt(event.target.value);
+    if (newQuantity === 0) {
+      return setQuantity(1);
+    }
+    const updatedCartData = getUpdatedCartData(cartData, newQuantity, product);
+    dispatch(setCartData(updatedCartData));
+    setQuantity(newQuantity);
+  };
+
+  const handleDecrease = () => {
+    if (quantity > 1) {
+      const newQuantity = quantity - 1;
+      const updatedCartData = getUpdatedCartData(
+        cartData,
+        newQuantity,
+        product
+      );
+      dispatch(setCartData(updatedCartData));
+      setQuantity(newQuantity);
+    }
+  };
+
+  const handleIncrease = () => {
+    const newQuantity = quantity + 1;
+    const updatedCartData = getUpdatedCartData(cartData, newQuantity, product);
+    dispatch(setCartData(updatedCartData));
+    setQuantity((prev) => prev + 1);
+  };
+
+  const handleDelete = () => {
+    const newCartData = cartData?.filter((item) => item?.id !== product?.id);
+    dispatch(setCartData(newCartData));
+  };
+
+  return (
+    <div className="cart-product-card">
+      <div className="cart-prod-img">
+        <img src={product?.imageURL} alt="product-img" width={70} height={60} />
+      </div>
+      <div className="cart-prod-details">
+        <div className="cart-prod-name">
+          <div>
+            <h4>{product?.name}</h4>
+            <h5 className="cart-prod-price">Rs.{product?.price}</h5>
+          </div>
+        </div>
+        <div className="quantity-input">
+          <button className="decrease-btn" onClick={handleDecrease}>
+            &#8722;
+          </button>
+          <input
+            className="quantity-field"
+            type="number"
+            min="1"
+            value={quantity}
+            onChange={handleQuantityChange}
+          />
+          <button className="increase-btn" onClick={handleIncrease}>
+            &#43;
+          </button>
+        </div>
+        <div className="cart-delete">
+          <button className="cart-delete-btn" onClick={handleDelete}>
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export { MainProductCard, CartProductCard };

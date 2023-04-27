@@ -1,6 +1,6 @@
 export const getTotalAmount = (cartData = []) => {
   const total = cartData?.reduce((agg, item) => {
-    const priceWithQuantity = item?.price * item?.quantity;
+    const priceWithQuantity = item?.price * item?.selectedQuantity;
     return agg + priceWithQuantity;
   }, 0);
   return total;
@@ -9,7 +9,7 @@ export const getTotalAmount = (cartData = []) => {
 export const getUpdatedCartData = (cartData, quantity, product) => {
   const updatedCartData = cartData?.map((item) => {
     if (item?.id === product?.id) {
-      return { ...item, quantity: quantity };
+      return { ...item, selectedQuantity: quantity };
     }
     return item;
   });

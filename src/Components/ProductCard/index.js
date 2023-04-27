@@ -41,14 +41,15 @@ const MainProductCard = ({ product }) => {
 };
 
 const CartProductCard = ({ product }) => {
-  const [quantity, setQuantity] = useState(product?.quantity);
+  const [quantity, setQuantity] = useState(product?.selectedQuantity);
   const cartData = useSelector((state) => state?.cartData);
   const dispatch = useDispatch();
 
   const handleQuantityChange = (event) => {
-    let newQuantity = parseInt(event.target.value);
-    if (newQuantity === 0) {
-      return setQuantity(1);
+    let newQuantity =
+      !isNaN(event.target.value) && parseInt(event.target.value);
+    if (newQuantity > product?.quantity) {
+      return alert(`There are total ${product?.quantity} items left in stock`);
     }
     const updatedCartData = getUpdatedCartData(cartData, newQuantity, product);
     dispatch(setCartData(updatedCartData));
@@ -70,6 +71,9 @@ const CartProductCard = ({ product }) => {
 
   const handleIncrease = () => {
     const newQuantity = quantity + 1;
+    if (newQuantity > product?.quantity) {
+      return alert(`There are total ${product?.quantity} left in stock`);
+    }
     const updatedCartData = getUpdatedCartData(cartData, newQuantity, product);
     dispatch(setCartData(updatedCartData));
     setQuantity((prev) => prev + 1);

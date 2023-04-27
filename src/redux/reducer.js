@@ -25,7 +25,11 @@ export const reducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case SET_PRODUCTS_DATA: {
-      return { ...state, productsData: payload };
+      const mappedData = payload?.map((item) => ({
+        ...item,
+        selectedQuantity: 1,
+      }));
+      return { ...state, productsData: mappedData };
     }
     case SET_CART_DATA: {
       return { ...state, cartData: payload };

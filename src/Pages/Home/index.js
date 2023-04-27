@@ -30,7 +30,6 @@ const Home = () => {
   }, [selectedFilters, searchProducts]);
 
   const filterProducts = useCallback(() => {
-    debugger
     const filteredProducts = productsData?.filter((product) => {
       if (
         selectedFilters.color.length > 0 &&

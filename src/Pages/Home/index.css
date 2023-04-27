@@ -3,12 +3,32 @@
   padding: 3em;
 }
 .search-input {
-  border: 1px solid green;
   width: 30%;
   margin: auto;
+  display: flex;
+  gap: 1em;
+  position: fixed;
+  top: 7em;
+  left: 45%;
+}
+.search-box {
+  width: 60%;
+  height: 2.5em;
+  border: none;
+  border-bottom: 1px solid #b8b6b6;
+  outline: none;
+}
+.search-icon-container {
+  background: #b8b6b6;
+  padding: 0.5em 0.7em 0.2em 0.7em;
+  cursor: pointer;
+  border-radius: 0.4em;
+}
+.search-icon {
+  color: white;
 }
 .main-container {
-  margin-top: 2em;
+  margin-top: 3.5em;
   display: flex;
   justify-content: space-between;
 }

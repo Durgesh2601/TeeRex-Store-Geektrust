@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { BsSearch } from "react-icons/bs";
 import { GET_PRODUCTS_API } from "../../api/productApi";
 import { setProductData } from "../../redux/reducer";
 import { MainProductCard } from "../../Components/ProductCard";
@@ -24,7 +25,10 @@ const Home = () => {
   return (
     <div className="homepage-container">
       <div className="search-input">
-        <input placeholder="Search for products..." />
+        <input placeholder="Search for products..." className="search-box" />
+        <div className="search-icon-container">
+          <BsSearch className="search-icon" />
+        </div>
       </div>
       <div className="main-container">
         <div className="filters-container">

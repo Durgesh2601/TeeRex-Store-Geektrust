@@ -4,6 +4,7 @@
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   height: fit-content;
+  border-radius: 0.5em;
 }
 .product-img-container {
   align-items: center;

@@ -15,3 +15,16 @@ export const getUpdatedCartData = (cartData, quantity, product) => {
   });
   return updatedCartData;
 };
+
+export const getAfterSearchData = (data, searchVal) => {
+  if (data && searchVal) {
+    const afterSearchData = data?.filter((item) => {
+      return Object.values(item)
+        ?.join("")
+        ?.trim()
+        ?.toLocaleLowerCase()
+        .includes(searchVal?.trim().toLocaleLowerCase());
+    });
+    return afterSearchData;
+  }
+};

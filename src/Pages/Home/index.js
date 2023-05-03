@@ -7,6 +7,7 @@ import { MainProductCard } from "../../Components/ProductCard";
 import EmptyScreen from "../../Components/EmptyScreen";
 import Filter from "../../Components/Filters";
 import "./index.css";
+import { getAfterSearchData } from "../../Utils/helperFunctions";
 
 const Home = () => {
   const [selectedFilters, setSelectedFilters] = useState({
@@ -25,6 +26,27 @@ const Home = () => {
     getProductData();
   }, []);
 
+  const filterProducts = useCallback(() => {
+    let data = productsData;
+    if (searchText) {
+      const afterSearchData = getAfterSearchData(productsData, searchText);
+      data = afterSearchData;
+    }
+    const filteredArr = data?.filter((item) => {
+      return Object.keys(selectedFilters)?.every((eachKey) => {
+        if (!selectedFilters[eachKey].length) {
+          return true;
+        }
+        return selectedFilters[eachKey].includes(item[eachKey]);
+      });
+    });
+    setData(filteredArr);
+  }, [selectedFilters, searchText]);
+
+  useEffect(() => {
+    filterProducts();
+  }, [filterProducts]);
+
   const getProductData = () => {
     setLoading(true);
     fetch(GET_PRODUCTS_API)
@@ -42,14 +64,8 @@ const Home = () => {
 
   const setSearchItems = (searchVal) => {
     setSearchText(searchVal);
-    const filteredData = productsData?.filter((item) => {
-      return Object.values(item)
-        ?.join("")
-        ?.trim()
-        ?.toLocaleLowerCase()
-        .includes(searchVal?.trim().toLocaleLowerCase());
-    });
-    setData(filteredData);
+    const afterSearchData = getAfterSearchData(productsData, searchVal);
+    setData(afterSearchData);
   };
 
   return loading ? (
@@ -72,7 +88,7 @@ const Home = () => {
       </div>
       <div className="main-container">
         <div className="filters-container">
-          <Filter />
+          <Filter {...{ selectedFilters, setSelectedFilters }} />
         </div>
         <div className="products-container">
           {data?.length > 0 ? (

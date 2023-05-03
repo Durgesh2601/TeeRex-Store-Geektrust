@@ -16,59 +16,56 @@ const Home = () => {
     type: [],
   });
   const [searchText, setSearchText] = useState("");
-  const [searchProducts, setSearchProducts] = useState(false);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const productsData = useSelector((state) => state?.productsData);
 
   useEffect(() => {
-    if (
-      Object.values(selectedFilters).some((value) => value.length === 0) &&
-      !searchText
-    ) {
-      getProductData();
-    }
-  }, [selectedFilters, searchProducts]);
-
-  const filterProducts = useCallback(() => {
-    const filteredProducts = productsData?.filter((product) => {
-      if (
-        selectedFilters.color.length > 0 &&
-        !selectedFilters.color.includes(product.color)
-      ) {
-        return false;
-      }
-      if (
-        searchText &&
-        !product?.name?.toLowerCase().includes(searchText?.toLowerCase())
-      ) {
-        return false;
-      }
-    });
-    dispatch(setProductData(filteredProducts));
-  }, [selectedFilters, searchProducts]);
-
-  useEffect(() => {
-    filterProducts();
-  }, [filterProducts]);
+    getProductData();
+  }, []);
 
   const getProductData = () => {
+    setLoading(true);
     fetch(GET_PRODUCTS_API)
       .then((res) => res.json())
-      .then((data) => dispatch(setProductData(data)));
+      .then((data) => {
+        dispatch(setProductData(data));
+        setData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.error(err);
+      });
   };
 
-  return (
+  const setSearchItems = (searchVal) => {
+    setSearchText(searchVal);
+    const filteredData = productsData?.filter((item) => {
+      return Object.values(item)
+        ?.join("")
+        ?.trim()
+        ?.toLocaleLowerCase()
+        .includes(searchVal?.trim().toLocaleLowerCase());
+    });
+    setData(filteredData);
+  };
+
+  return loading ? (
+    <h4 className="loading">Loading...</h4>
+  ) : (
     <div className="homepage-container">
       <div className="search-input">
         <input
           placeholder="Search for products..."
           className="search-box"
           value={searchText}
-          onChange={(event) => setSearchText(event?.target?.value)}
+          onChange={(event) => setSearchItems(event?.target?.value)}
         />
         <div
           className="search-icon-container"
-          onClick={() => setSearchProducts((prev) => !prev)}
+          onClick={() => setSearchItems(searchText)}
         >
           <BsSearch className="search-icon" />
         </div>
@@ -78,8 +75,8 @@ const Home = () => {
           <Filter />
         </div>
         <div className="products-container">
-          {productsData?.length > 0 ? (
-            productsData?.map((item) => (
+          {data?.length > 0 ? (
+            data?.map((item) => (
               <MainProductCard product={item} key={item?.id} />
             ))
           ) : (

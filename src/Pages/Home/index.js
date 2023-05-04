@@ -13,7 +13,7 @@ const Home = () => {
   const [selectedFilters, setSelectedFilters] = useState({
     color: [],
     gender: [],
-    price: {},
+    price: [],
     type: [],
   });
   const [searchText, setSearchText] = useState("");
@@ -24,6 +24,7 @@ const Home = () => {
 
   useEffect(() => {
     getProductData();
+    // eslint-disable-next-line
   }, []);
 
   const filterProducts = useCallback(() => {
@@ -32,16 +33,28 @@ const Home = () => {
       const afterSearchData = getAfterSearchData(productsData, searchText);
       data = afterSearchData;
     }
-    const filteredArr = data?.filter((item) => {
-      return Object.keys(selectedFilters)?.every((eachKey) => {
-        if (!selectedFilters[eachKey].length) {
-          return true;
-        }
-        return selectedFilters[eachKey].includes(item[eachKey]);
+    if (selectedFilters?.price?.length > 0) {
+      const minValue = Math.min(...selectedFilters?.price);
+      const maxValue = Math.max(...selectedFilters?.price);
+      const tempData = data;
+      data = tempData?.filter(
+        (item) => item?.price > minValue && item?.price < maxValue
+      );
+    }
+    const { price, ...otherFilters } = selectedFilters;
+    let filteredArr = data;
+    if (Object.values(otherFilters).some((value) => value.length > 0)) {
+      filteredArr = data?.filter((item) => {
+        return Object.keys(selectedFilters)?.every((filter) => {
+          if (!selectedFilters[filter].length) {
+            return true;
+          }
+          return selectedFilters[filter].includes(item[filter]);
+        });
       });
-    });
+    }
     setData(filteredArr);
-  }, [selectedFilters, searchText]);
+  }, [productsData, selectedFilters, searchText]);
 
   useEffect(() => {
     filterProducts();
@@ -67,6 +80,8 @@ const Home = () => {
     const afterSearchData = getAfterSearchData(productsData, searchVal);
     setData(afterSearchData);
   };
+
+  console.log(selectedFilters?.price);
 
   return loading ? (
     <h4 className="loading">Loading...</h4>

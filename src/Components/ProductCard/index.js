@@ -46,8 +46,8 @@ const CartProductCard = ({ product }) => {
   const dispatch = useDispatch();
 
   const handleQuantityChange = (event) => {
-    let newQuantity =
-      !isNaN(event.target.value) && parseInt(event.target.value);
+    const value = event.target.value;
+    let newQuantity = !isNaN(value) && parseInt(value);
     if (newQuantity > product?.quantity) {
       return alert(`There are total ${product?.quantity} items left in stock`);
     }

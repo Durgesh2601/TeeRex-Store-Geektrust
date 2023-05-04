@@ -43,14 +43,15 @@ const Home = () => {
     const { price, ...otherFilters } = selectedFilters;
     let filteredArr = data;
     if (Object.values(otherFilters).some((value) => value.length > 0)) {
-      filteredArr = data?.filter((item) => {
-        return Object.keys(selectedFilters)?.every((filter) => {
-          if (!selectedFilters[filter].length) {
+      const tempData = filteredArr?.filter((item) => {
+        return Object.keys(otherFilters)?.every((filter) => {
+          if (!otherFilters?.[filter]?.length) {
             return true;
           }
-          return selectedFilters[filter].includes(item[filter]);
+          return otherFilters?.[filter]?.includes(item?.[filter]);
         });
       });
+      filteredArr = tempData;
     }
     setData(filteredArr);
   }, [productsData, selectedFilters, searchText]);

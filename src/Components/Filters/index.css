@@ -1,13 +1,6 @@
 .filter-item {
   padding: 1em;
 }
-.clear-filters {
-  text-align: center;
-  text-decoration: underline;
-  margin: 0.5em 0;
-  cursor: pointer;
-  color: #cf2841;
-}
 
 .filter-option {
   margin: 0.7em 0 0 0.4em;

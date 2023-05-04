@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BsSearch } from "react-icons/bs";
 import { CiFilter } from "react-icons/ci";
 import { GET_PRODUCTS_API } from "../../api/productApi";
-import { setProductData } from "../../redux/reducer";
+import { setProductData } from "../../store/reducer";
 import { MainProductCard } from "../../Components/ProductCard";
 import Filters from "../../Components/Filters";
 import EmptyScreen from "../../Components/EmptyScreen";

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCartData } from "../../redux/reducer";
+import { setCartData } from "../../store/reducer";
 import "./index.css";
 import { getUpdatedCartData } from "../../Utils/helperFunctions";
 

@@ -1,0 +1,24 @@
+.filter-drawer {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  bottom: 0;
+  width: 300px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transition: right 0.3s ease-out;
+}
+
+.drawer-content {
+  padding: 20px;
+}
+
+.filter-drawer.open {
+  right: 0;
+}
+
+@media screen and (min-width: 577px) {
+  .filter-drawer {
+    display: none;
+  }
+}

@@ -7,7 +7,7 @@ import Navbar from "./Components/Navbar";
 function App() {
   return (
     <BrowserRouter>
-    <Navbar/>
+      <Navbar />
       <Routes>
         <Route element={<Home />} path="/" />
         <Route element={<CartPage />} path="/cart" />

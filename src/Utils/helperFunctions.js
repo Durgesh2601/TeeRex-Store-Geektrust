@@ -1,6 +1,7 @@
 export const getTotalAmount = (cartData = []) => {
   const total = cartData?.reduce((agg, item) => {
-    const priceWithQuantity = item?.price * item?.selectedQuantity;
+    const priceWithQuantity =
+      Number(item?.price) * Number(item?.selectedQuantity);
     return agg + priceWithQuantity;
   }, 0);
   return total;

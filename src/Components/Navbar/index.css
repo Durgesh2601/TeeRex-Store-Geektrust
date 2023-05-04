@@ -38,3 +38,12 @@ li {
   text-align: center;
   line-height: 1.3;
 }
+
+@media screen and (max-width: 576px) {
+  .navbar {
+    padding: 1em;
+  }
+  .menu {
+    gap: 0.8em;
+  }
+}

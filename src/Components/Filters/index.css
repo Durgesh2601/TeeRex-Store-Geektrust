@@ -1,15 +1,30 @@
 .filter-item {
   padding: 1em;
 }
+.clear-filters {
+  text-align: center;
+  text-decoration: underline;
+  margin: 0.5em 0;
+  cursor: pointer;
+  color: #cf2841;
+}
+
 .filter-option {
   margin: 0.7em 0 0 0.4em;
 }
+
 .filter-checkbox {
   margin-right: 0.7em;
   cursor: pointer;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: left;
 }
+
 input.filter-checkbox {
   width: 1.2em;
   height: 1.2em;
   accent-color: #c4c4c4;
+  margin-left: 8px;
 }

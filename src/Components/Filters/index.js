@@ -2,7 +2,6 @@ import { filterData } from "../../Constants/filters";
 import "./index.css";
 
 const Filter = ({ selectedFilters, setSelectedFilters }) => {
-  
   const handleFilterChange = (event, item, value) => {
     const isChecked = event?.target?.checked;
     if (isChecked) {
@@ -43,20 +42,17 @@ const Filter = ({ selectedFilters, setSelectedFilters }) => {
       <h4>{item?.label}</h4>
       {item?.options?.map((option, index) => (
         <div className="filter-option" key={`${option}-${index}`}>
-          <input
-            type="checkbox"
-            value={option?.value}
-            className="filter-checkbox"
-            id={item?.type === "range" ? option?.value?.min : option?.value}
-            onChange={(event) => handleFilterChange(event, item, option?.value)}
-          ></input>
-          <label
-            htmlFor={
-              item?.type === "range" ? option?.value?.min : option?.value
-            }
-            className="filter-checkbox"
-          >
+          <label className="filter-checkbox">
             {option?.label}
+            <input
+              type="checkbox"
+              value={option?.value}
+              className="filter-checkbox"
+              id={item?.type === "range" ? option?.value?.min : option?.value}
+              onChange={(event) =>
+                handleFilterChange(event, item, option?.value)
+              }
+            />
           </label>
         </div>
       ))}

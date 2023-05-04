@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { BsCart3 } from "react-icons/bs";
-import "./index.css";
 import { useSelector } from "react-redux";
+import "./index.css";
 
 const Navbar = () => {
   const cartDataCount = useSelector((state) => state?.cartData?.length);

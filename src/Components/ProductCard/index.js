@@ -87,7 +87,11 @@ const CartProductCard = ({ product }) => {
   return (
     <div className="cart-product-card">
       <div className="cart-prod-img-container">
-        <img src={product?.imageURL} className="cart-prod-img" alt="product-img"/>
+        <img
+          src={product?.imageURL}
+          className="cart-prod-img"
+          alt="product-img"
+        />
       </div>
       <div className="cart-prod-details">
         <div className="cart-prod-name">

@@ -1,24 +1,23 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BsSearch } from "react-icons/bs";
+import { CiFilter } from "react-icons/ci";
 import { GET_PRODUCTS_API } from "../../api/productApi";
 import { setProductData } from "../../redux/reducer";
 import { MainProductCard } from "../../Components/ProductCard";
+import Filters from "../../Components/Filters";
 import EmptyScreen from "../../Components/EmptyScreen";
-import Filter from "../../Components/Filters";
-import "./index.css";
 import { getAfterSearchData } from "../../Utils/helperFunctions";
+import "./index.css";
+import FilterDrawer from "../../Components/FilterDrawer";
+import { emptyFilters } from "../../Constants/filters";
 
 const Home = () => {
-  const [selectedFilters, setSelectedFilters] = useState({
-    color: [],
-    gender: [],
-    price: [],
-    type: [],
-  });
+  const [selectedFilters, setSelectedFilters] = useState(emptyFilters);
   const [searchText, setSearchText] = useState("");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isFilterDrawer, setIsFilterDrawer] = useState(false);
   const dispatch = useDispatch();
   const productsData = useSelector((state) => state?.productsData);
 
@@ -77,11 +76,16 @@ const Home = () => {
 
   const setSearchItems = (searchVal) => {
     setSearchText(searchVal);
-    const afterSearchData = getAfterSearchData(productsData, searchVal);
-    setData(afterSearchData);
+    if (searchVal) {
+      const afterSearchData = getAfterSearchData(productsData, searchVal);
+      setData(afterSearchData);
+    }
   };
 
-  console.log(selectedFilters?.price);
+  const handleShowDrawer = (event) => {
+    event.stopPropagation();
+    setIsFilterDrawer((prev) => !prev);
+  };
 
   return loading ? (
     <h4 className="loading">Loading...</h4>
@@ -98,12 +102,23 @@ const Home = () => {
           className="search-icon-container"
           onClick={() => setSearchItems(searchText)}
         >
-          <BsSearch className="search-icon" />
+          <BsSearch className="homepage-icons" />
+        </div>
+        <div className="search-icon-container filter-icon">
+          <CiFilter className="homepage-icons" onClick={handleShowDrawer} />
         </div>
       </div>
+      <FilterDrawer
+        {...{
+          isFilterDrawer,
+          setIsFilterDrawer,
+          selectedFilters,
+          setSelectedFilters,
+        }}
+      />
       <div className="main-container">
         <div className="filters-container">
-          <Filter {...{ selectedFilters, setSelectedFilters }} />
+          <Filters {...{ selectedFilters, setSelectedFilters }} />
         </div>
         <div className="products-container">
           {data?.length > 0 ? (

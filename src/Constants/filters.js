@@ -16,7 +16,7 @@ export const filterData = [
     name: "gender",
     options: [
       { label: "Men", value: "Men" },
-      { label: "Woman", value: "Woman" },
+      { label: "Women", value: "Women" },
     ],
     type: "multiselect",
   },
@@ -43,3 +43,10 @@ export const filterData = [
     type: "multiselect",
   },
 ];
+
+export const emptyFilters = {
+  color: [],
+  gender: [],
+  price: [],
+  type: [],
+};

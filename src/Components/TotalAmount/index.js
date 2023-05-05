@@ -1,8 +1,9 @@
-import { useSelector } from "react-redux";
+import { useContext } from "react";
 import { getTotalAmount } from "../../Utils/helperFunctions";
+import { StoreContext } from "../Context/StoreContext";
 
 const TotalAmount = () => {
-  const cartData = useSelector((state) => state?.cartData);
+  const { cartData } = useContext(StoreContext);
   const totalAmout = getTotalAmount(cartData);
 
   return (

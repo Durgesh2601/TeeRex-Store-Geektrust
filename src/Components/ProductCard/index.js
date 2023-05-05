@@ -1,21 +1,19 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setCartData } from "../../store/reducer";
-import "./index.css";
+import { useContext, useState } from "react";
 import { getUpdatedCartData } from "../../Utils/helperFunctions";
+import { StoreContext } from "../Context/StoreContext";
+import "./index.css";
 
 const MainProductCard = ({ product }) => {
-  const dispatch = useDispatch();
-  const cartData = useSelector((state) => state?.cartData);
+  const { cartData, setCartData } = useContext(StoreContext);
   const isAddedInCart = cartData?.some((item) => item?.id === product?.id);
   const cartBtnText = isAddedInCart ? "Remove" : "Add to cart";
 
   const handleAddToCart = () => {
     if (isAddedInCart) {
       const newCartData = cartData?.filter((item) => item?.id !== product?.id);
-      dispatch(setCartData(newCartData));
+      setCartData(newCartData);
     } else {
-      dispatch(setCartData([...cartData, product]));
+      setCartData((prev) => [...prev, product]);
     }
   };
 
@@ -42,8 +40,7 @@ const MainProductCard = ({ product }) => {
 
 const CartProductCard = ({ product }) => {
   const [quantity, setQuantity] = useState(product?.selectedQuantity);
-  const cartData = useSelector((state) => state?.cartData);
-  const dispatch = useDispatch();
+  const { cartData, setCartData } = useContext(StoreContext);
 
   const handleQuantityChange = (event) => {
     const value = event.target.value;
@@ -52,7 +49,7 @@ const CartProductCard = ({ product }) => {
       return alert(`There are total ${product?.quantity} items left in stock`);
     }
     const updatedCartData = getUpdatedCartData(cartData, newQuantity, product);
-    dispatch(setCartData(updatedCartData));
+    setCartData(updatedCartData);
     setQuantity(newQuantity);
   };
 
@@ -64,7 +61,7 @@ const CartProductCard = ({ product }) => {
         newQuantity,
         product
       );
-      dispatch(setCartData(updatedCartData));
+      setCartData(updatedCartData);
       setQuantity(newQuantity);
     }
   };
@@ -75,13 +72,15 @@ const CartProductCard = ({ product }) => {
       return alert(`There are total ${product?.quantity} left in stock`);
     }
     const updatedCartData = getUpdatedCartData(cartData, newQuantity, product);
-    dispatch(setCartData(updatedCartData));
+    setCartData(updatedCartData);
     setQuantity((prev) => prev + 1);
   };
 
   const handleDelete = () => {
-    const newCartData = cartData?.filter((item) => item?.id !== product?.id);
-    dispatch(setCartData(newCartData));
+    const updatedCartData = cartData?.filter(
+      (item) => item?.id !== product?.id
+    );
+    setCartData(updatedCartData);
   };
 
   return (

@@ -1,10 +1,11 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { BsCart3 } from "react-icons/bs";
-import { useSelector } from "react-redux";
 import "./index.css";
+import { StoreContext } from "../Context/StoreContext";
 
 const Navbar = () => {
-  const cartDataCount = useSelector((state) => state?.cartData?.length);
+  const { cartData } = useContext(StoreContext);
   return (
     <nav className="navbar">
       <div>
@@ -21,8 +22,8 @@ const Navbar = () => {
                 <div>
                   <BsCart3 size={22} />
                 </div>
-                {cartDataCount > 0 && (
-                  <div className="cart-count">{cartDataCount}</div>
+                {cartData?.length > 0 && (
+                  <div className="cart-count">{cartData?.length}</div>
                 )}
               </div>
             </Link>

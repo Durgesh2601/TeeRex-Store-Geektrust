@@ -1,16 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { CiFilter } from "react-icons/ci";
 import { GET_PRODUCTS_API } from "../../api/productApi";
-import { setProductData } from "../../store/reducer";
 import { MainProductCard } from "../../Components/ProductCard";
 import Filters from "../../Components/Filters";
 import EmptyScreen from "../../Components/EmptyScreen";
 import { getAfterSearchData } from "../../Utils/helperFunctions";
-import "./index.css";
 import FilterDrawer from "../../Components/FilterDrawer";
 import { emptyFilters } from "../../Constants/filters";
+import { StoreContext } from "../../Components/Context/StoreContext";
+import "./index.css";
 
 const Home = () => {
   const [selectedFilters, setSelectedFilters] = useState(emptyFilters);
@@ -18,8 +17,7 @@ const Home = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isFilterDrawer, setIsFilterDrawer] = useState(false);
-  const dispatch = useDispatch();
-  const productsData = useSelector((state) => state?.productsData);
+  const { productsData, setProductsData } = useContext(StoreContext);
 
   useEffect(() => {
     getProductData();
@@ -29,7 +27,7 @@ const Home = () => {
   const filterProducts = useCallback(() => {
     let data = productsData;
     if (searchText) {
-      const afterSearchData = getAfterSearchData(productsData, searchText);
+      const afterSearchData = getAfterSearchData(data, searchText);
       data = afterSearchData;
     }
     if (selectedFilters?.price?.length > 0) {
@@ -54,6 +52,7 @@ const Home = () => {
       filteredArr = tempData;
     }
     setData(filteredArr);
+    // eslint-disable-next-line
   }, [productsData, selectedFilters, searchText]);
 
   useEffect(() => {
@@ -65,8 +64,9 @@ const Home = () => {
     fetch(GET_PRODUCTS_API)
       .then((res) => res.json())
       .then((data) => {
-        dispatch(setProductData(data));
-        setData(data);
+        const mappedData = data?.map((item) => ({...item, selectedQuantity: 1}));
+        setProductsData(mappedData);
+        setData(mappedData);
         setLoading(false);
       })
       .catch((err) => {
